@@ -13,9 +13,10 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            background: linear-gradient(135deg, #e8f5e9 0%, #f5faf5 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #333;
         }
         
         .container {
@@ -23,131 +24,155 @@
             margin: 0 auto;
         }
         
+        /* Шапка с логотипом и цветом #01532b */
         header {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
-            color: white;
-            border-radius: 15px;
+            background-color: #01532b;
+            color: #ffffff;
+            padding: 35px 20px;
+            border-radius: 16px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(102, 187, 106, 0.3);
+            box-shadow: 0 6px 20px rgba(1, 83, 43, 0.25);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-img {
+            max-width: 240px;
+            height: auto;
+            display: block;
+            margin: 0 auto 15px;
+            border-radius: 10px;
+            /* Если у логотипа прозрачный фон, можно убрать background */
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
         }
         
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 2.4em;
+            margin-bottom: 8px;
             font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
         }
         
         .subtitle {
-            font-size: 1.1em;
-            opacity: 0.95;
-            font-weight: 300;
+            font-size: 1.15em;
+            opacity: 0.85;
+            font-weight: 400;
+            color: #b8e6c8;
         }
         
+        /* Навигация */
         .nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             margin-bottom: 40px;
-            padding: 25px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            border: 1px solid #d4edda;
         }
         
         .nav a {
             display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
-            color: white;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #01532b 0%, #026b38 100%);
+            color: #ffffff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(102, 187, 106, 0.3);
+            font-size: 0.95em;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(1, 83, 43, 0.2);
             border: 2px solid transparent;
         }
         
         .nav a:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 187, 106, 0.4);
-            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
-            border-color: #43a047;
+            box-shadow: 0 5px 14px rgba(1, 83, 43, 0.35);
+            background: linear-gradient(135deg, #026b38 0%, #01532b 100%);
+            border-color: #038a49;
         }
         
+        /* Секции графиков */
         .graph-section {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 28px;
             margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-left: 5px solid #81c784;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            border-left: 6px solid #01532b;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .graph-section:hover {
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
         }
         
         .graph-section h2 {
-            color: #2e7d32;
-            margin-bottom: 20px;
-            font-size: 1.6em;
-            padding-bottom: 10px;
+            color: #01532b;
+            margin-bottom: 16px;
+            font-size: 1.5em;
+            padding-bottom: 12px;
             border-bottom: 2px solid #e8f5e9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .graph-section p {
-            color: #666;
+            color: #555;
             margin-bottom: 20px;
             line-height: 1.6;
+            font-size: 0.95em;
         }
         
         .graph-container {
             position: relative;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
             background: #fafafa;
+            border: 1px solid #e0e0e0;
         }
         
         iframe {
             width: 100%;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             display: block;
         }
         
         footer {
             text-align: center;
-            padding: 30px;
-            color: #66bb6a;
+            padding: 30px 20px;
+            color: #01532b;
             font-size: 0.9em;
             margin-top: 40px;
+            opacity: 0.8;
         }
         
+        /* Адаптивность */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .nav {
-                flex-direction: column;
-            }
-            
-            .nav a {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .graph-section {
-                padding: 20px;
-            }
+            header { padding: 25px 15px; }
+            .logo-img { max-width: 180px; }
+            h1 { font-size: 1.8em; }
+            .subtitle { font-size: 1em; }
+            .nav { flex-direction: column; padding: 15px; }
+            .nav a { width: 100%; text-align: center; }
+            .graph-section { padding: 20px; }
+            .graph-section h2 { font-size: 1.3em; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📊 Результаты тематического моделирования</h1>
+            <img src="logo.jpg" alt="Логотип проекта" class="logo-img">
+            <h1>Результаты тематического моделирования</h1>
             <p class="subtitle">Анализ текстов группы "Курара"</p>
         </header>
         
@@ -155,7 +180,8 @@
             <a href="#timeline">📈 Хронология тем</a>
             <a href="#barchart">📊 Столбчатая диаграмма</a>
             <a href="#scatter">☁️ Облако слов</a>
-            <a href="#graph">🕸️ Граф слов</a>
+            <a href="#treemap">🌳 Treemap</a>
+            <a href="#graph">️ Граф слов</a>
         </nav>
 
         <section class="graph-section" id="timeline">
@@ -167,7 +193,7 @@
         </section>
 
         <section class="graph-section" id="barchart">
-            <h2>📊 Сравнение тем по альбомам</h2>
+            <h2> Сравнение тем по альбомам</h2>
             <p>Столбчатая диаграмма позволяет наглядно сравнить интенсивность различных тем в каждом альбоме.</p>
             <div class="graph-container">
                 <iframe src="kurala_bar_chart.html" height="700" title="Столбчатая диаграмма"></iframe>
@@ -182,16 +208,24 @@
             </div>
         </section>
 
+        <section class="graph-section" id="treemap">
+            <h2>🌳 Иерархия тем и слов (Treemap)</h2>
+            <p>Древовидная карта показывает вложенность: какая тема содержит какие слова, а размер прямоугольника отражает частоту упоминания в текстах.</p>
+            <div class="graph-container">
+                <iframe src="kurala_treemap.html" height="850" title="Treemap тем и слов"></iframe>
+            </div>
+        </section>
+
         <section class="graph-section" id="graph">
             <h2>🕸️ Сетевой граф слов</h2>
-            <p>Интерактивная сеть связей между альбомами и ключевыми словами. Показывает, какие слова встречаются в каких альбомах.</p>
+            <p>Интерактивная сеть связей между альбомами и ключевыми словами. Показывает, какие слова встречаются в каких альбомах и как они группируются по темам.</p>
             <div class="graph-container">
                 <iframe src="kurala_words_graph.html" height="900" title="Граф слов"></iframe>
             </div>
         </section>
 
         <footer>
-            <p>© 2024 Анализ текстов | Создано с помощью Python, Plotly и Pyvis</p>
+            <p>© 2024–2026 Анализ текстов | Создано с помощью Python, Plotly, Pyvis & GitHub Pages</p>
         </footer>
     </div>
 
