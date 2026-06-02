@@ -1,32 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Анализ текстов Курара</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты тематического моделирования</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
-        h1 { color: #333; }
-        .nav { margin: 20px 0; }
-        .nav a { display: inline-block; margin: 10px; padding: 15px 25px; background: #0366d6; color: white; text-decoration: none; border-radius: 5px; }
-        .nav a:hover { background: #0256c7; }
-        iframe { width: 100%; border: none; margin: 20px 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(102, 187, 106, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .nav a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(102, 187, 106, 0.3);
+            border: 2px solid transparent;
+        }
+        
+        .nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 187, 106, 0.4);
+            background: linear-gradient(135deg, #66bb6a 0%, #43a047 100%);
+            border-color: #43a047;
+        }
+        
+        .graph-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid #81c784;
+        }
+        
+        .graph-section h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8f5e9;
+        }
+        
+        .graph-section p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .graph-container {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+        
+        iframe {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #66bb6a;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav {
+                flex-direction: column;
+            }
+            
+            .nav a {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .graph-section {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 Анализ текстов группы "Курара"</h1>
+        <header>
+            <h1>📊 Результаты тематического моделирования</h1>
+            <p class="subtitle">Анализ текстов группы "Курара"</p>
+        </header>
         
-        <div class="nav">
-            <a href="kurala_interactive_chart.html">📈 Хронология тем</a>
-            <a href="kurala_words_graph.html">🕸️ Граф слов</a>
-        </div>
+        <nav class="nav">
+            <a href="#timeline">📈 Хронология тем</a>
+            <a href="#barchart">📊 Столбчатая диаграмма</a>
+            <a href="#scatter">☁️ Облако слов</a>
+            <a href="#graph">🕸️ Граф слов</a>
+        </nav>
 
-        <h2>Интерактивный график эволюции тем</h2>
-        <iframe src="kurala_interactive_chart.html" height="600"></iframe>
+        <section class="graph-section" id="timeline">
+            <h2>📈 Хронологическая эволюция тем</h2>
+            <p>Динамика изменения тематической структуры альбомов во времени. Показывает, как развивались и менялись основные темы от альбома к альбому.</p>
+            <div class="graph-container">
+                <iframe src="kurala_interactive_chart.html" height="700" title="Хронология тем"></iframe>
+            </div>
+        </section>
 
-        <h2>Граф слов</h2>
-        <iframe src="kurala_words_graph.html" height="800"></iframe>
+        <section class="graph-section" id="barchart">
+            <h2>📊 Сравнение тем по альбомам</h2>
+            <p>Столбчатая диаграмма позволяет наглядно сравнить интенсивность различных тем в каждом альбоме.</p>
+            <div class="graph-container">
+                <iframe src="kurala_bar_chart.html" height="700" title="Столбчатая диаграмма"></iframe>
+            </div>
+        </section>
+
+        <section class="graph-section" id="scatter">
+            <h2>☁️ Распределение слов по темам</h2>
+            <p>Визуализация частоты ключевых слов в разрезе тематических групп. Размер точки отражает частоту упоминания.</p>
+            <div class="graph-container">
+                <iframe src="kurala_word_scatter.html" height="700" title="Облако слов"></iframe>
+            </div>
+        </section>
+
+        <section class="graph-section" id="graph">
+            <h2>🕸️ Сетевой граф слов</h2>
+            <p>Интерактивная сеть связей между альбомами и ключевыми словами. Показывает, какие слова встречаются в каких альбомах.</p>
+            <div class="graph-container">
+                <iframe src="kurala_words_graph.html" height="900" title="Граф слов"></iframe>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 Анализ текстов | Создано с помощью Python, Plotly и Pyvis</p>
+        </footer>
     </div>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
