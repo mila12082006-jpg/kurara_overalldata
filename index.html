@@ -2,29 +2,25 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Результаты тематического моделирования</title>
     <style>
         :root {
-            --primary-color: #01532b;
+            --primary: #01532b;
             --primary-light: #026b38;
-            --bg-color: #f7fbf8;
-            --card-bg: #ffffff;
-            --text-color: #333;
-            --text-muted: #666;
+            --bg: #f7fbf8;
+            --card: #ffffff;
+            --text: #333;
+            --muted: #666;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
             min-height: 100vh;
-            color: var(--text-color);
+            color: var(--text);
             line-height: 1.5;
         }
         
@@ -36,8 +32,8 @@
         
         /* Шапка */
         header {
-            background-color: var(--primary-color);
-            color: #ffffff;
+            background-color: var(--primary);
+            color: #fff;
             padding: 30px 20px;
             border-radius: 16px;
             margin-bottom: 25px;
@@ -52,72 +48,91 @@
             display: block;
             margin: 0 auto 15px;
             border-radius: 8px;
-            /* Убрал фон и padding вокруг логотипа */
         }
         
         h1 {
             font-size: 1.8em;
-            margin-bottom: 8px;
             font-weight: 700;
-            letter-spacing: -0.5px;
         }
         
-        /* Навигация */
-        .nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+        /* Карточки графиков — БЫСТРЫЙ РЕЖИМ */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 12px;
+        }
+        
+        .chart-card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        
-        .nav a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 20px;
-            background: var(--primary-color);
-            color: #ffffff;
+            border-top: 4px solid var(--primary);
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9em;
+            color: inherit;
             transition: transform 0.2s, box-shadow 0.2s;
-            flex: 1 1 auto;
-            max-width: 200px;
+            display: flex;
+            flex-direction: column;
         }
         
-        .nav a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(1, 83, 43, 0.3);
+        .chart-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(1, 83, 43, 0.15);
+        }
+        
+        .chart-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .chart-card h2 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .chart-card p {
+            color: var(--muted);
+            font-size: 0.9em;
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+        
+        .chart-card .open-btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-top: auto;
+        }
+        
+        .chart-card:hover .open-btn {
             background: var(--primary-light);
         }
         
-        /* Секции графиков */
+        /* Секции с iframe — только для десктопа, ленивая загрузка */
         .graph-section {
-            background: var(--card-bg);
+            background: var(--card);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            border-top: 4px solid var(--primary-color);
+            border-top: 4px solid var(--primary);
+            display: none; /* Скрыто на мобильных */
         }
         
         .graph-section h2 {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 12px;
             font-size: 1.3em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
         .graph-section p {
-            color: var(--text-muted);
+            color: var(--muted);
             margin-bottom: 15px;
             font-size: 0.9em;
         }
@@ -145,58 +160,31 @@
         footer {
             text-align: center;
             padding: 20px;
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 0.85em;
             opacity: 0.7;
             margin-bottom: 20px;
         }
 
-        /* МОБИЛЬНАЯ ВЕРСИЯ */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
+        /* === АДАПТИВ === */
+        @media (min-width: 1024px) {
+            /* На больших экранах показываем и карточки, и iframe-секции */
+            .charts-grid { display: grid; }
+            .graph-section { display: block; }
+        }
 
-            header {
-                padding: 20px 15px;
-                border-radius: 12px;
-            }
-
-            .logo-img {
-                max-width: 140px;
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-
-            .nav {
-                flex-direction: column;
-                gap: 8px;
-                padding: 10px;
-            }
-
-            .nav a {
-                width: 100%;
-                max-width: 100%;
-                padding: 15px;
-                font-size: 1em;
-            }
-
-            .graph-section {
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-
-            .graph-section h2 {
-                font-size: 1.1em;
-            }
+        @media (max-width: 1023px) {
+            /* На мобильных и планшетах — ТОЛЬКО карточки */
+            .charts-grid { display: grid; }
+            .graph-section { display: none !important; }
             
-            #timeline iframe { height: 450px !important; }
-            #barchart iframe { height: 450px !important; }
-            #scatter iframe { height: 450px !important; }
-            #treemap iframe { height: 600px !important; }
-            #graph iframe { height: 700px !important; }
+            header { padding: 20px 15px; }
+            .logo-img { max-width: 140px; }
+            h1 { font-size: 1.5em; }
+            .container { padding: 10px; }
+            .charts-grid {
+                grid-template-columns: 1fr; /* Одна колонка на телефоне */
+            }
         }
     </style>
 </head>
@@ -205,30 +193,60 @@
         <header>
             <img src="logo.jpg" alt="Логотип" class="logo-img">
             <h1>Результаты тематического моделирования</h1>
-            <!-- Убрал подзаголовок -->
         </header>
         
-        <nav class="nav">
-            <a href="#timeline">📈 Хронология тем</a>
-            <a href="#barchart">📊 Столбчатая диаграмма</a>
-            <a href="#scatter">📊 Диаграмма рассеяния</a>
-            <a href="#treemap">🌳 Treemap</a>
-            <a href="#graph">🕸️ Граф слов</a>
-        </nav>
+        <!-- КАРТОЧКИ — быстрый способ, работает везде -->
+        <div class="charts-grid">
+            <a href="kurala_interactive_chart.html" target="_blank" class="chart-card">
+                <div class="icon">📈</div>
+                <h2>Хронология тем</h2>
+                <p>Динамика изменения тем от альбома к альбому</p>
+                <div class="open-btn">Открыть график →</div>
+            </a>
 
+            <a href="kurala_bar_chart.html" target="_blank" class="chart-card">
+                <div class="icon"></div>
+                <h2>Столбчатая диаграмма</h2>
+                <p>Сравнение интенсивности тем в каждом альбоме</p>
+                <div class="open-btn">Открыть график →</div>
+            </a>
+
+            <a href="kurala_word_scatter.html" target="_blank" class="chart-card">
+                <div class="icon"></div>
+                <h2>Диаграмма рассеяния</h2>
+                <p>Частота ключевых слов в разрезе тем</p>
+                <div class="open-btn">Открыть график →</div>
+            </a>
+
+            <a href="kurala_treemap.html" target="_blank" class="chart-card">
+                <div class="icon">🌳</div>
+                <h2>Иерархия (Treemap)</h2>
+                <p>Вложенность тем и слов, размер блока = частота</p>
+                <div class="open-btn">Открыть график →</div>
+            </a>
+
+            <a href="kurala_words_graph.html" target="_blank" class="chart-card">
+                <div class="icon">🕸️</div>
+                <h2>Граф слов</h2>
+                <p>Интерактивная сеть связей альбомов и слов</p>
+                <div class="open-btn">Открыть график →</div>
+            </a>
+        </div>
+
+        <!-- IFRAME-СЕКЦИИ — только для десктопа -->
         <section class="graph-section" id="timeline">
             <h2>📈 Хронологическая эволюция тем</h2>
-            <p>Динамика тем от альбома к альбому. <br><small>На мобильном график можно прокручивать пальцем влево-вправо.</small></p>
+            <p>Динамика тем от альбома к альбому.</p>
             <div class="iframe-wrapper">
-                <iframe src="kurala_interactive_chart.html" height="600" title="Хронология тем"></iframe>
+                <iframe data-src="kurala_interactive_chart.html" height="600" title="Хронология тем"></iframe>
             </div>
         </section>
 
         <section class="graph-section" id="barchart">
-            <h2>📊 Сравнение тем по альбомам</h2>
+            <h2> Сравнение тем по альбомам</h2>
             <p>Интенсивность тем в каждом альбоме.</p>
             <div class="iframe-wrapper">
-                <iframe src="kurala_bar_chart.html" height="600" title="Столбчатая диаграмма"></iframe>
+                <iframe data-src="kurala_bar_chart.html" height="600" title="Столбчатая диаграмма"></iframe>
             </div>
         </section>
 
@@ -236,7 +254,7 @@
             <h2>📊 Диаграмма рассеяния</h2>
             <p>Размер точки отражает частоту упоминания слова.</p>
             <div class="iframe-wrapper">
-                <iframe src="kurala_word_scatter.html" height="600" title="Диаграмма рассеяния"></iframe>
+                <iframe data-src="kurala_word_scatter.html" height="600" title="Диаграмма рассеяния"></iframe>
             </div>
         </section>
 
@@ -244,30 +262,57 @@
             <h2>🌳 Иерархия (Treemap)</h2>
             <p>Вложенность тем и слов. Большие блоки — частые темы.</p>
             <div class="iframe-wrapper">
-                <iframe src="kurala_treemap.html" height="800" title="Treemap"></iframe>
+                <iframe data-src="kurala_treemap.html" height="800" title="Treemap"></iframe>
             </div>
         </section>
 
         <section class="graph-section" id="graph">
             <h2>🕸️ Сетевой граф слов</h2>
-            <p>Связи между альбомами и словами. <br><small>💡 Этот график большой, используйте скролл.</small></p>
+            <p>Связи между альбомами и словами.</p>
             <div class="iframe-wrapper">
-                <iframe src="kurala_words_graph.html" height="800" title="Граф слов"></iframe>
+                <iframe data-src="kurala_words_graph.html" height="800" title="Граф слов"></iframe>
             </div>
         </section>
 
         <footer>
-            <p>© 2024–2026 Анализ текстов | GitHub Pages</p>
+            <p>© 2024–2026 | GitHub Pages</p>
         </footer>
     </div>
 
     <script>
+        // ЛЕНИВАЯ ЗАГРУЗКА iframe на десктопе
+        // Iframe загружается только когда пользователь до него доскроллил
+        document.addEventListener("DOMContentLoaded", function() {
+            const iframes = document.querySelectorAll('iframe[data-src]');
+            
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const iframe = entry.target;
+                            iframe.src = iframe.dataset.src;
+                            observer.unobserve(iframe);
+                        }
+                    });
+                }, { rootMargin: '200px' }); // Начинаем грузить за 200px до появления
+                
+                iframes.forEach(iframe => observer.observe(iframe));
+            } else {
+                // Фолбэк: грузим всё сразу
+                iframes.forEach(iframe => iframe.src = iframe.dataset.src);
+            }
+        });
+
+        // Плавный скролл
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 }
             });
         });
