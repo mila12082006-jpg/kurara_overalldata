@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результаты тематического моделирования</title>
+    <title>Тематическое моделирование</title>
     <style>
         :root {
             --primary: #01532b;
@@ -53,6 +53,18 @@
         h1 {
             font-size: 1.8em;
             font-weight: 700;
+        }
+
+        .intro-text {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 4px solid var(--primary);
+            color: var(--text);
+            font-size: 1em;
+            line-height: 1.6;
         }
         
         /* Карточки графиков — БЫСТРЫЙ РЕЖИМ */
@@ -192,11 +204,22 @@
     <div class="container">
         <header>
             <img src="logo.jpg" alt="Логотип" class="logo-img">
-            <h1>Результаты тематического моделирования</h1>
+            <h1>Тематическое моделирование</h1>
         </header>
+
+        <div class="intro-text">
+            Здесь представлены результаты тематического моделирования. Если Вы просматриваете визуализацию на телефоне, рекомендуется изменить ориентацию устройства на горизонтальную.
+        </div>
         
         <!-- КАРТОЧКИ — быстрый способ, работает везде -->
         <div class="charts-grid">
+            <a href="kurala_theme_distribution.html" target="_blank" class="chart-card">
+                <div class="icon">🥧</div>
+                <h2>Распределение тем</h2>
+                <p>Круговая диаграмма — доля каждой темы в корпусе</p>
+                <div class="open-btn">Открыть график →</div>
+            </a>
+
             <a href="kurala_interactive_chart.html" target="_blank" class="chart-card">
                 <div class="icon">📈</div>
                 <h2>Хронология тем</h2>
@@ -234,6 +257,14 @@
         </div>
 
         <!-- IFRAME-СЕКЦИИ — только для десктопа -->
+        <section class="graph-section" id="distribution">
+            <h2>🥧 Распределение тем</h2>
+            <p>Доля каждой темы в общем корпусе.</p>
+            <div class="iframe-wrapper">
+                <iframe data-src="kurala_theme_distribution.html" height="600" title="Распределение тем"></iframe>
+            </div>
+        </section>
+
         <section class="graph-section" id="timeline">
             <h2>📈 Хронологическая эволюция тем</h2>
             <p>Динамика тем от альбома к альбому.</p>
